@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -12,9 +13,9 @@ public class Server {
 
     public void startServer(int port) {
         try {
-
             while (true) {
                 serverSocket = new ServerSocket(port);
+                createGUI();
                 clientSocket = serverSocket.accept();
                 System.out.println("Connected to client");
 
@@ -24,14 +25,13 @@ public class Server {
                 bufferWrite = new BufferedWriter(output);
 
                 while (true) {
-                    String clientRequest = bufferRead.readLine();
-                    bufferWrite.write("Server: Message received");
-                    bufferWrite.newLine();
-                    bufferWrite.flush();
-
-                    System.out.println("Client: " + clientRequest);
-
-                    if (clientRequest.equals("q")) {
+                    try {
+                        String clientRequest = bufferRead.readLine();
+                        bufferWrite.write("Server: Message received");
+                        bufferWrite.newLine();
+                        bufferWrite.flush();
+                        if (clientRequest != null) { System.out.println("Client: " + clientRequest); }
+                    } catch (Exception e) {
                         disconnect();
                         System.out.println("Client Disconnected\n");
                         break;
@@ -56,8 +56,16 @@ public class Server {
         }
     }
 
+    private void createGUI() {
+        JFrame serverFrame = new JFrame("ServerUI");
+        serverFrame.setContentPane(new ServerUI().serverPane);
+        serverFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        serverFrame.pack();
+        serverFrame.setBounds(10,10,350,300);
+        serverFrame.setVisible(true);
+    }
+
     public static void main(String[] args) {
-        System.out.println("Server Started\n");
         Server testServer = new Server();
         testServer.startServer(1234);
     }
