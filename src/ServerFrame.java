@@ -3,15 +3,13 @@ import java.awt.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.util.Scanner;
 
 public class ServerFrame extends JFrame {
     // Java Swing Attributes
     private JPanel viewSet;
     private CardLayout cardlayout;
 
-    // Client Attributes
+    // Server Attributes
     private ServerSocket serverSocket;
     private Socket clientSocket;
     private InputStreamReader input;
@@ -26,6 +24,7 @@ public class ServerFrame extends JFrame {
     public ServerFrame() {
         // Set up the frame with a few settings.
         viewSet = new JPanel(new CardLayout());
+        System.out.println("Server Started\n");
         viewSet.add(new MessagePanel("Server Started"), "message");
         cardlayout = (CardLayout) (viewSet.getLayout());
         cardlayout.show(viewSet, "message");
@@ -42,7 +41,7 @@ public class ServerFrame extends JFrame {
         this.setSize(600, 400);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        this.setTitle("ClientUI");
+        this.setTitle("ServerUI");
         this.setVisible(true);
     }
 
@@ -51,13 +50,14 @@ public class ServerFrame extends JFrame {
             while (true) {
                 serverSocket = new ServerSocket(port);
                 clientSocket = serverSocket.accept();
-                System.out.println("Connected to client");
-                updateText("Connected to Client ");
 
                 input = new InputStreamReader(clientSocket.getInputStream());
                 output = new OutputStreamWriter(clientSocket.getOutputStream());
                 bufferRead = new BufferedReader(input);
                 bufferWrite = new BufferedWriter(output);
+
+                System.out.println("Connected to client");
+                updateText("Connected to Client ");
 
                 while (true) {
                     try {
@@ -83,12 +83,13 @@ public class ServerFrame extends JFrame {
     }
     public void disconnect() {
         try {
-            clientSocket.close();
-            serverSocket.close();
-            input.close();
-            output.close();
-            bufferRead.close();
-            bufferWrite.close();
+            // Allows server to disconnect even when no clients are connected
+            if (clientSocket != null) { clientSocket.close(); }
+            if (serverSocket != null) { serverSocket.close(); }
+            if (input != null) { input.close(); }
+            if (output != null) { output.close(); }
+            if (bufferRead != null) { bufferRead.close(); }
+            if (bufferRead != null) { bufferWrite.close(); }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
