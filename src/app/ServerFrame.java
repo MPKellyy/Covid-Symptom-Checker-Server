@@ -1,4 +1,6 @@
+package app;
 import javax.swing.*;
+
 import java.awt.*;
 import java.io.*;
 import java.net.ServerSocket;
@@ -110,6 +112,7 @@ public class ServerFrame extends JFrame {
         }
         catch (Exception e) {
             System.out.println("Something went wrong...");
+            System.out.println(e);
         }
     }
 
