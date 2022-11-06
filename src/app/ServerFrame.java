@@ -64,10 +64,10 @@ public class ServerFrame extends JFrame {
                 while (true) {
                     try {
                         String clientRequest = bufferRead.readLine();
-                        bufferWrite.write("Server: Message received");
-                        bufferWrite.newLine();
-                        bufferWrite.flush();
                         if (clientRequest != null) {
+                            bufferWrite.write((new AnswerHandler(clientRequest).getLikelihood()));
+                            bufferWrite.newLine();
+                            bufferWrite.flush();
                             System.out.println("Client: " + clientRequest);
                             updateText(clientRequest);
                         }
