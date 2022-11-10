@@ -119,7 +119,6 @@ public class ServerFrame extends JFrame {
     }
 
     // Java Swing Functions
-
     /**
      * Updates current panel on server frame.
      * @param message binary string of client's responses.
