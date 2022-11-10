@@ -77,6 +77,7 @@ public class ServerFrame extends JFrame {
                     try {
                         // Read client response
                         String clientRequest = bufferRead.readLine();
+
                         // If connection is still established with client
                         if (clientRequest != null) {
                             // Respond to client with calculated covid likelihood
@@ -86,6 +87,10 @@ public class ServerFrame extends JFrame {
                             // Display client's responses as binary string to server user
                             System.out.println("Client: " + clientRequest);
                             updateText(clientRequest);
+                        } else {
+                            disconnect();
+                            System.out.println("Client Disconnected\n");
+                            break;
                         }
                     } catch (Exception e) {
                         disconnect();
