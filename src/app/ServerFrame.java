@@ -6,6 +6,10 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * This class is responsible controlling which panel is displayed to the user.
+ * This class also serves the main frame for the software.
+ */
 public class ServerFrame extends JFrame {
     // Java Swing Attributes
     private JPanel viewSet;
