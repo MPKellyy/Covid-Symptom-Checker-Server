@@ -2,7 +2,7 @@ package app;
 
 /**
  * This class takes in a string of '0's and '1's given by yes or no answers to survey questions.
- * It then creates a weight total to determine likelihood of COVID
+ * It then creates a weight total to determine likelihood of COVID.
  */
 
 public class AnswerHandler {
@@ -13,9 +13,8 @@ public class AnswerHandler {
 	private int answerWeight;
 
 	/**
-	 * Takes in string value of yes and no answers and creates a weight total for likelihood of COVID
-	 * 
-	 * @param answerString
+	 * Takes in string value of yes and no answers and creates a weight total for likelihood of COVID.
+	 * @param answerString Binary string representation of user responses.
 	 */
 	public AnswerHandler(String answerString) {
 		this.answerString = answerString;
@@ -49,14 +48,14 @@ public class AnswerHandler {
 	}
 
 	/**
-	 * @return Weight total for likelihood of COVID
+	 * @return Weight total for likelihood of COVID.
 	 */
 	public int getAnswerWeight() {
 		return answerWeight;
 	}
 
 	/**
-	 * @return String used to determine weight
+	 * @return String used to determine weight.
 	 */
 	public String getAnswerString() {
 		return answerString;

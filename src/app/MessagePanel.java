@@ -2,7 +2,9 @@ package app;
 import javax.swing.*;
 import java.awt.*;
 
-
+/**
+ * Basic panel for server-side that displays binary string of client responses.
+ */
 public class MessagePanel extends JPanel {
 
     public MessagePanel(String message) {

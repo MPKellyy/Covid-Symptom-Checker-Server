@@ -19,9 +19,8 @@ public class ServerFrame extends JFrame {
     private BufferedReader bufferRead;
     private BufferedWriter bufferWrite;
 
-    // Constructor
     /**
-     * Constructor for ClientFrame
+     * Constructor for ServerFrame.
      */
     public ServerFrame() {
         // Set up the frame with a few settings.
@@ -47,27 +46,40 @@ public class ServerFrame extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * Sets-up a server socket for client communication.
+     * @param port specifies a port to establish the socket.
+     */
     public void startServer(int port) {
         try {
+            // Looks for client connections until server is shut down.
             while (true) {
+                // Preliminary socket set-up
                 serverSocket = new ServerSocket(port);
                 clientSocket = serverSocket.accept();
 
+                // Establishing read/write behavior
                 input = new InputStreamReader(clientSocket.getInputStream());
                 output = new OutputStreamWriter(clientSocket.getOutputStream());
                 bufferRead = new BufferedReader(input);
                 bufferWrite = new BufferedWriter(output);
 
+                // Notify user when a client connects
                 System.out.println("Connected to client");
                 updateText("Connected to Client ");
 
+                // While the client is connected
                 while (true) {
                     try {
+                        // Read client response
                         String clientRequest = bufferRead.readLine();
+                        // If connection is still established with client
                         if (clientRequest != null) {
+                            // Respond to client with calculated covid likelihood
                             bufferWrite.write((new AnswerHandler(clientRequest).getLikelihood()));
                             bufferWrite.newLine();
                             bufferWrite.flush();
+                            // Display client's responses as binary string to server user
                             System.out.println("Client: " + clientRequest);
                             updateText(clientRequest);
                         }
@@ -77,12 +89,17 @@ public class ServerFrame extends JFrame {
                         break;
                     }
                 }
+                // Notify to user that no clients are connected
                 updateText("No Clients Connected");
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Function used to close the server socket connection.
+     */
     public void disconnect() {
         try {
             // Allows server to disconnect even when no clients are connected
@@ -98,12 +115,21 @@ public class ServerFrame extends JFrame {
     }
 
     // Java Swing Functions
+
+    /**
+     * Updates current panel on server frame.
+     * @param message binary string of client's responses.
+     */
     public void updateText(String message) {
         viewSet.add(new MessagePanel(message), message);
         cardlayout.show(viewSet, message);
         viewSet.remove(0);
     }
 
+    /**
+     * Main function for server.
+     * @param args
+     */
     public static void main(String[] args) {
         try {
             // Starting server services here
