@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Covid-Symptom-Checker-Server:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Covid_Symptom_Checker_Server_jar</output-path>
+    <root id="archive" name="Covid-Symptom-Checker-Server.jar">
+      <element id="module-output" name="Covid-Symptom-Checker-Server" />
+    </root>
+  </artifact>
+</component>
